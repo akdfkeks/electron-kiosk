@@ -23,7 +23,7 @@ function createMainWindow() {
 	});
 
 	if (isDev) mainWindow.loadURL("http://localhost:3000");
-	else mainWindow.loadFile("app/dist/index.html");
+	else mainWindow.loadFile("build/index.html");
 
 	if (isDev) createCamWindow();
 }
