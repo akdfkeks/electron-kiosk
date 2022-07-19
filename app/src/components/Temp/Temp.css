@@ -1,0 +1,23 @@
+.CamButtonContainer {
+	width: 100%;
+	padding-top: 3em;
+}
+.ResponseContainer {
+	width: 100%;
+	text-align: center;
+}
+.CamButton {
+	margin: auto;
+	display: block;
+	width: 15em;
+	height: 4em;
+	font-size: 1.5em;
+	font-family: consolas;
+}
+.ResponseText {
+	color: white;
+}
+.TempContainer {
+	justify-content: center;
+	width: 100%;
+}

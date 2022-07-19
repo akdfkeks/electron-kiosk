@@ -1,7 +1,5 @@
-const electron = require("electron");
 const faceapi = require("face-api.js");
-const ipcRenderer = electron.ipcRenderer;
-//import * as faceapi from "face-api.js";
+const path = require("path");
 
 // Initialize detect option and model
 const minConfidenceFace = 0.5;
@@ -9,9 +7,11 @@ const faceapiOptions = new faceapi.SsdMobilenetv1Options({ minConfidenceFace });
 
 // Global variables and flags
 let cam;
-let isRunning = true;
-let isReady = false;
 let loopTimer;
+const displaySize = {
+	width: 480,
+	height: 360,
+};
 
 // Basic environment settings
 faceapi.env.monkeyPatch({
@@ -24,9 +24,8 @@ faceapi.env.monkeyPatch({
 });
 
 const loadNet = async () => {
-	const detectionNet = faceapi.nets.ssdMobilenetv1;
-	await detectionNet.load("../data/weights");
-	await faceapi.loadFaceDetectionModel("../data/weights");
+	await faceapi.nets.ssdMobilenetv1.loadFromDisk(path.join(__dirname, "../data/weights"));
+	await faceapi.loadFaceDetectionModel(path.join(__dirname, "../data/weights"));
 };
 
 // Initialize Camera
@@ -52,17 +51,18 @@ const initCamera = async (width, height) => {
 	});
 };
 
+const overlay = document.getElementById("overlay");
+const dims = faceapi.matchDimensions(overlay, displaySize, true);
+
 const detectFace = async () => {
-	let result = await faceapi.detectSingleFace(cam, faceapiOptions).withFaceLandmarks().withFaceDescriptor();
-
-	if (!isReady) {
-		isReady = true;
+	const frame = await faceapi.detectSingleFace(cam, faceapiOptions);
+	if (frame) {
+		const resizedResult = faceapi.resizeResults(frame, dims);
+		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+		faceapi.draw.drawDetections(overlay, resizedResult);
+	} else {
+		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
 	}
-	if (typeof result == "undefined") {
-	}
-
-	// Test
-	console.log(result);
 };
 
 loadNet()
@@ -73,5 +73,5 @@ loadNet()
 	.then((video) => {
 		console.log("Camera was initialized");
 		cam = video;
-		loopTimer = setInterval(detectFace, 500);
+		loopTimer = setInterval(detectFace, 0);
 	});

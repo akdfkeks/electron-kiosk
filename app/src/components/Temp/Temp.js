@@ -1,27 +1,30 @@
 import React, { Component } from "react";
+import "./Temp.css";
 
 export default class Temp extends Component {
 	constructor(props) {
 		super(props);
-		this.channel = "CAM_WINDOW_CTL";
+		this.channel = "createCamWindow";
 		this.state = {
 			ipcResponseText: "asdf",
 		};
 	}
 	camWindow = () => {
-		window.api.send(this.channel, "Message from renderer to Main");
+		window.electron.send(this.channel, "Start face extract");
 	};
 
 	render = () => {
 		return (
-			<div className="CamContainer">
-				<div className="">
-					<button className="CamWindowButton" onClick={this.camWindow}>
-						Send message to Main Process
+			<div className="TempContainer">
+				<div className="CamButtonContainer">
+					<button className="CamButton" onClick={this.camWindow}>
+						🔎 Create Face Extractor 🔍 <br />
+						<hr />
+						Click!
 					</button>
 				</div>
-				<div className="ResponseText">
-					<h1>{this.state.ipcResponseText}</h1>
+				<div className="ResponseContainer">
+					<h1 className="ResponseText">{this.state.ipcResponseText}</h1>
 				</div>
 			</div>
 		);
