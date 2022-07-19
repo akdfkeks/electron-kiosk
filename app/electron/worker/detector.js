@@ -56,10 +56,13 @@ const dims = faceapi.matchDimensions(overlay, displaySize, true);
 
 const detectFace = async () => {
 	const frame = await faceapi.detectSingleFace(cam, faceapiOptions);
-	const resizedResult = faceapi.resizeResults(frame, dims);
-
-	overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
-	faceapi.draw.drawDetections(overlay, resizedResult);
+	if (frame) {
+		const resizedResult = faceapi.resizeResults(frame, dims);
+		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+		faceapi.draw.drawDetections(overlay, resizedResult);
+	} else {
+		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+	}
 };
 
 loadNet()
