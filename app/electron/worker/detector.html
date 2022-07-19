@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-	<div style="position: relative" class="margin">
-		<video onplay="onPlay(this)" id="cam" autoplay muted></video>
-		<canvas id="overlay" />
-  	</div>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" type="text/css" href="./detector.css" />
+	</head>
+	<body style="margin: 0; padding: 0">
+		<video id="cam" autoplay muted></video>
+		<canvas id="overlay" style="position: absolute"></canvas>
+	</body>
 	<script src="./detector.js"></script>
 </html>
