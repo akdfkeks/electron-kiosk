@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = process.env.NODE_ENV === "development";
 
@@ -25,10 +25,11 @@ function createMainWindow() {
 	if (isDev) mainWindow.loadURL("http://localhost:3000");
 	else mainWindow.loadFile("build/index.html");
 
-	createCamWindow();
+	ipcMain.on("createCamWindow", () => createCamWindow());
 }
 
 function createCamWindow() {
+	if (camWindow) return;
 	camWindow = new BrowserWindow({
 		width: 480,
 		height: 360,
@@ -38,9 +39,12 @@ function createCamWindow() {
 		webPreferences: {
 			devTools: isDev,
 			nodeIntegration: true,
+			contextIsolation: false,
 		},
 	});
 	camWindow.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
+
+	camWindow.on("closed", () => (camWindow = null));
 }
 
 app.whenReady().then(() => {
