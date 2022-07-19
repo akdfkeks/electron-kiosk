@@ -1,8 +1,4 @@
-const electron = require("electron");
 const faceapi = require("face-api.js");
-const ipcRenderer = electron.ipcRenderer;
-//import * as faceapi from "face-api.js";
-
 // Initialize detect option and model
 const minConfidenceFace = 0.5;
 const faceapiOptions = new faceapi.SsdMobilenetv1Options({ minConfidenceFace });

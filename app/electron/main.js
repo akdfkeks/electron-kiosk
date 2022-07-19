@@ -18,14 +18,14 @@ function createMainWindow() {
 		},
 	});
 
-	mainWindow.webContents.on("did-finish-load", () => {
-		mainWindow.show();
-	});
+	// mainWindow.webContents.on("did-finish-load", () => {
+	// 	mainWindow.show();
+	// });
 
 	if (isDev) mainWindow.loadURL("http://localhost:3000");
 	else mainWindow.loadFile("build/index.html");
 
-	if (isDev) createCamWindow();
+	createCamWindow();
 }
 
 function createCamWindow() {
@@ -40,7 +40,7 @@ function createCamWindow() {
 			nodeIntegration: true,
 		},
 	});
-	if (isDev) camWindow.focus();
+	camWindow.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
 }
 
 app.whenReady().then(() => {
