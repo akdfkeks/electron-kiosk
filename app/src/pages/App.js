@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Temp from "../components/Temp/Temp.js";
+import Temp from "./Temp/Temp.js";
+import Selector from "./Selector/Selector.js";
 
 export default class App extends Component {
 	constructor(props) {
@@ -9,7 +10,12 @@ export default class App extends Component {
 	render = () => {
 		return (
 			<div>
-				<Temp />
+				<div>
+					<Temp />
+				</div>
+				<div>
+					<Selector />
+				</div>
 			</div>
 		);
 	};
