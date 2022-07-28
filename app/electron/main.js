@@ -14,14 +14,11 @@ function createMainWindow() {
 		show: true,
 		webPreferences: {
 			devTools: true,
+			contextIsolation: true,
 			preload: path.join(__dirname, "./function/preload.js"),
 		},
 	});
-
-	// mainWindow.webContents.on("did-finish-load", () => {
-	// 	mainWindow.show();
-	// });
-
+	console.log(__dirname);
 	if (isDev) mainWindow.loadURL("http://localhost:3000");
 	else mainWindow.loadFile("build/index.html");
 
@@ -32,14 +29,14 @@ function createCamWindow() {
 	if (camWindow) return;
 	camWindow = new BrowserWindow({
 		width: 480,
-		height: 360,
+		height: 420,
 		center: true,
 		//resizable: isDev,
 		//show: isDev,
 		webPreferences: {
 			devTools: true,
-			nodeIntegration: true,
-			contextIsolation: false,
+			contextIsolation: true,
+			preload: path.join(__dirname, "./worker/detectPreload.js"),
 		},
 	});
 	camWindow.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
@@ -50,12 +47,7 @@ function createCamWindow() {
 app.whenReady().then(() => {
 	createMainWindow();
 	systemPreferences.askForMediaAccess("camera").then((allowed) => {
-		console.log(allowed);
-	});
-	app.on("activate", () => {
-		if (BrowserWindow.getAllWindows().length === 0) {
-			createMainWindow();
-		}
+		if (!allowed) alert("Camera not available");
 	});
 });
 

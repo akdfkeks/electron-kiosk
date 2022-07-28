@@ -8,6 +8,7 @@
 .SelectorContainer > button {
 	height: 7vh;
 	width: 20vw;
+	color: black;
 }
 .ButtonPackage {
 	color: white;
