@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electron", {
 	send: (channel, data) => {
-		let validChannels = ["createCamWindow", "toMain"];
+		let validChannels = ["createCamWindow", "toMain", "detectFace"];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.send(channel, data);
 		}

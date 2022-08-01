@@ -1,8 +1,8 @@
 const { app, BrowserWindow, ipcMain, systemPreferences } = require("electron");
-const isDev = process.env.NODE_ENV === "development";
 const path = require("path");
+const isDev = process.env.NODE_ENV === "development";
 
-let mainWindow, camWindow;
+let mainWindow, camService;
 
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
@@ -23,37 +23,43 @@ function createMainWindow() {
 	else mainWindow.loadFile("build/index.html");
 }
 
-function createCamWindow() {
-	if (camWindow) return;
-	camWindow = new BrowserWindow({
+function startCamService() {
+	if (camService) return;
+
+	systemPreferences.askForMediaAccess("camera").then((allowed) => {
+		if (!allowed) alert("Camera not available");
+	});
+
+	camService = new BrowserWindow({
 		width: 480,
-		height: 420,
+		height: 360,
 		center: true,
 		//resizable: isDev,
-		//show: isDev,
+		show: isDev,
 		webPreferences: {
 			devTools: true,
 			contextIsolation: true,
 			preload: path.join(__dirname, "./worker/detectPreload.js"),
 		},
 	});
-	camWindow.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
-
-	camWindow.on("closed", () => (camWindow = null));
+	camService.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
+	camService.on("closed", () => (camService = null));
 }
 
 app.whenReady().then(() => {
 	createMainWindow();
-	systemPreferences.askForMediaAccess("camera").then((allowed) => {
-		if (!allowed) alert("Camera not available");
+	startCamService();
+
+	ipcMain.on("detectFace", (flag) => camServiceController(flag));
+	ipcMain.on("detectedScore", (event, payload) => {
+		console.log(payload);
 	});
-	ipcMain.on("createCamWindow", () => createCamWindow());
-	ipcMain.on("detectedScore", (...args) => sendDetectedScore(args[0]));
 });
 
 app.on("window-all-closed", () => app.quit());
 
-function sendDetectedScore(score) {
-	console.log(score);
-	mainWindow.webContents.send("detectedScore", score);
+function camServiceController(flag) {
+	if (flag) flag = "true";
+	else flag = "false";
+	camService.webContents.send("camServiceController", flag);
 }
