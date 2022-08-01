@@ -5,7 +5,7 @@
 	"main": "app/electron/main.js",
 	"private": true,
 	"scripts": {
-		"start": "concurrently \"npm run dev-server\" \"wait-on -l http://127.0.0.1:3000 && npm run dev\"",
+		"start": "concurrently \"npm run dev-server\" \"wait-on -l http://localhost:3000 && npm run dev\"",
 		"dev-server": "webpack serve --mode development --config ./config/webpack.development.js",
 		"dev": "cross-env NODE_ENV=development electron .",
 		"preprod": "webpack --mode production --config ./config/webpack.production.js",
