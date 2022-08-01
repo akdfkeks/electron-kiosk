@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Splash from "./Splash/Splash.js";
 import Selector from "./Selector/Selector.js";
-import MainFrame from "./MainFrame/MainFrame.js";
+import Order from "./Order/Order.js";
+import Payment from "./Payment/Payment.js";
+import Complete from "./Complete/Complete.js";
 
 export default class App extends Component {
 	constructor(props) {
@@ -15,9 +17,9 @@ export default class App extends Component {
 				<Routes>
 					<Route path="/" element={<Splash />} />
 					<Route path="/selector" element={<Selector />} />
-					{/* <Route path="/order" element={<Order />} />
-						<Route path="/payment" element={<Payment />} />
-						<Route path="/complete" element={<Complete />} /> */}
+					<Route path="/order" element={<Order />} />
+					<Route path="/payment" element={<Payment />} />
+					<Route path="/complete" element={<Complete />} />
 				</Routes>
 			</HashRouter>
 		);
