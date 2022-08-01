@@ -2,11 +2,10 @@ const { contextBridge, ipcRenderer } = require("electron");
 const faceapi = require("face-api.js");
 const path = require("path");
 
-let cam, loopTimer, status;
+let cam, video;
 let overlay, faceapiOptions, dims;
 const displaySize = { width: 480, height: 360 }; //
 const minConfidence = 0.5;
-
 const DETECTION_COUNT = 5;
 
 contextBridge.exposeInMainWorld("faceapi", {
@@ -25,6 +24,7 @@ contextBridge.exposeInMainWorld("faceapi", {
 		ipcRenderer.on("camServiceController", (flag) => {
 			camServiceController(flag);
 		});
+		console.log("Detection Ready");
 	},
 });
 
@@ -37,13 +37,16 @@ faceapi.env.monkeyPatch({
 	createImageElement: () => document.createElement("img"),
 });
 
+async function initVariables() {
+	faceapiOptions = new faceapi.SsdMobilenetv1Options({ minConfidence });
+	dims = faceapi.matchDimensions(overlay, displaySize, true);
+}
 async function loadNet() {
 	await faceapi.loadSsdMobilenetv1Model(path.join(__dirname, "../data/weights"));
 	await faceapi.loadFaceDetectionModel(path.join(__dirname, "../data/weights"));
 }
-
 async function initCamera(width, height) {
-	const video = document.getElementById("cam");
+	video = document.getElementById("cam");
 	video.width = width;
 	video.height = height;
 
@@ -65,24 +68,17 @@ async function initCamera(width, height) {
 }
 
 async function detectFace() {
-	const frame = await faceapi.detectSingleFace(cam, faceapiOptions);
-	if (frame) {
-		const resizedResult = faceapi.resizeResults(frame, dims);
+	const face = await faceapi.detectSingleFace(cam, faceapiOptions);
+	const frame = new ImageCapture();
+	if (face) {
+		const resizedResult = faceapi.resizeResults(face, dims);
 		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
 		faceapi.draw.drawDetections(overlay, resizedResult);
-		return frame.classScore;
+		return { score: face.classScore, image: null };
 	} else {
 		clearOverlay();
 	}
 }
-function clearOverlay() {
-	overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
-}
-async function initVariables() {
-	faceapiOptions = new faceapi.SsdMobilenetv1Options({ minConfidence });
-	dims = faceapi.matchDimensions(overlay, displaySize, true);
-}
-
 async function camServiceController(flag) {
 	const status = new Boolean(flag);
 
@@ -95,15 +91,16 @@ async function camServiceController(flag) {
 		}
 	}
 }
-
+function clearOverlay() {
+	overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+}
 async function detect() {
 	let result = new Array(DETECTION_COUNT);
 	for (let i = 0; i < DETECTION_COUNT; i++) {
-		result[i] = await detectFace();
+		result[i] = { score: await detectFace() };
 	}
 	//console.log(result);
 }
-
 async function analyzeFace(result) {
 	let avg = 0;
 	for (let i = 0; i < DETECTION_COUNT; i++) {
