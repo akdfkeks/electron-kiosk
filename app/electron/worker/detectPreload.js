@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
+const getResult = require("./analyzer.js");
 const faceapi = require("face-api.js");
 const path = require("path");
 
@@ -68,13 +69,14 @@ async function initCamera(width, height) {
 }
 
 async function detectFace() {
-	const face = await faceapi.detectSingleFace(cam, faceapiOptions);
-	const frame = new ImageCapture();
-	if (face) {
-		const resizedResult = faceapi.resizeResults(face, dims);
-		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+	//const face = await faceapi.detectSingleFace(cam, faceapiOptions);
+	const frame = (await faceapi.fetchImage(cam)) || null;
+	const detection = (await faceapi.detectSingleFace(frame, faceapiOptions)) || null;
+	if (frame && detection) {
+		const resizedResult = faceapi.resizeResults(detection, dims);
+		clearOverlay();
 		faceapi.draw.drawDetections(overlay, resizedResult);
-		return { score: face.classScore, image: null };
+		return { score: detection.classScore, image: frame };
 	} else {
 		clearOverlay();
 	}
@@ -96,19 +98,12 @@ function clearOverlay() {
 }
 async function detect() {
 	let result = new Array(DETECTION_COUNT);
-	for (let i = 0; i < DETECTION_COUNT; i++) {
-		result[i] = { score: await detectFace() };
-	}
-	//console.log(result);
-}
-async function analyzeFace(result) {
-	let avg = 0;
-	for (let i = 0; i < DETECTION_COUNT; i++) {
-		avg += result[i];
-	}
-	avg = avg / DETECTION_COUNT;
-
-	if (avg < minConfidence) {
-		throw new Error("Error from analyzeFace");
+	try {
+		for (let i = 0; i < DETECTION_COUNT; i++) {
+			result[i] = await detectFace();
+		}
+		const faceClass = await getResult(result);
+	} catch (err) {
+		console.log(err);
 	}
 }
