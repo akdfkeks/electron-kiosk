@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Temp from "./Temp/Temp.js";
+import Splash from "./Splash/Splash.js";
 import Selector from "./Selector/Selector.js";
 
 export default class App extends Component {
@@ -11,13 +12,13 @@ export default class App extends Component {
 	render() {
 		return (
 			<HashRouter>
-				<div>
-					<Route path="/splash" element={<Splash />} />
+				<Routes>
+					<Route path="/" element={<Splash />} />
 					<Route path="/selector" element={<Selector />} />
-					<Route path="/order" element={<Order />} />
+					{/* <Route path="/order" element={<Order />} />
 					<Route path="/payment" element={<Payment />} />
-					<Route path="/complete" element={<Complete />} />
-				</div>
+					<Route path="/complete" element={<Complete />} /> */}
+				</Routes>
 			</HashRouter>
 		);
 	}
