@@ -68,6 +68,7 @@ async function detectFace() {
 		const resizedResult = faceapi.resizeResults(frame, dims);
 		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
 		faceapi.draw.drawDetections(overlay, resizedResult);
+		ipcRenderer.send("detectedScore", frame.classScore);
 	} else {
 		overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
 	}

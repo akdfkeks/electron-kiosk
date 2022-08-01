@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { HashRouter, Route } from "react-router-dom";
 import Temp from "./Temp/Temp.js";
 import Selector from "./Selector/Selector.js";
 
@@ -7,16 +8,17 @@ export default class App extends Component {
 		super(props);
 		this.state = {};
 	}
-	render = () => {
+	render() {
 		return (
-			<div>
+			<HashRouter>
 				<div>
-					<Temp />
+					<Route path="/splash" element={<Splash />} />
+					<Route path="/selector" element={<Selector />} />
+					<Route path="/order" element={<Order />} />
+					<Route path="/payment" element={<Payment />} />
+					<Route path="/complete" element={<Complete />} />
 				</div>
-				<div>
-					<Selector />
-				</div>
-			</div>
+			</HashRouter>
 		);
-	};
+	}
 }

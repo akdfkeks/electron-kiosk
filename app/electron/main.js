@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, systemPreferences } = require("electron");
-const path = require("path");
 const isDev = process.env.NODE_ENV === "development";
+const path = require("path");
 
 let mainWindow, camWindow;
 
@@ -18,11 +18,9 @@ function createMainWindow() {
 			preload: path.join(__dirname, "./function/preload.js"),
 		},
 	});
-	console.log(__dirname);
+
 	if (isDev) mainWindow.loadURL("http://localhost:3000");
 	else mainWindow.loadFile("build/index.html");
-
-	ipcMain.on("createCamWindow", () => createCamWindow());
 }
 
 function createCamWindow() {
@@ -49,8 +47,13 @@ app.whenReady().then(() => {
 	systemPreferences.askForMediaAccess("camera").then((allowed) => {
 		if (!allowed) alert("Camera not available");
 	});
+	ipcMain.on("createCamWindow", () => createCamWindow());
+	ipcMain.on("detectedScore", (...args) => sendDetectedScore(args[0]));
 });
 
-app.on("window-all-closed", function () {
-	app.quit();
-});
+app.on("window-all-closed", () => app.quit());
+
+function sendDetectedScore(score) {
+	console.log(score);
+	mainWindow.webContents.send("detectedScore", score);
+}

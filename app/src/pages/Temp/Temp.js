@@ -6,7 +6,7 @@ export default class Temp extends Component {
 		super(props);
 		this.channel = "createCamWindow";
 		this.state = {
-			ipcResponseText: "asdf",
+			data: null,
 		};
 	}
 	camWindow = () => {
@@ -14,6 +14,9 @@ export default class Temp extends Component {
 	};
 
 	render = () => {
+		(function () {
+			window.electron.receive("detectedScore", (score) => this.setState({ data: score }));
+		})();
 		return (
 			<div className="TempContainer">
 				<div className="CamButtonContainer">
@@ -24,7 +27,7 @@ export default class Temp extends Component {
 					</button>
 				</div>
 				<div className="ResponseContainer">
-					<h1 className="ResponseText">{this.state.ipcResponseText}</h1>
+					<h1 className="ResponseText">{this.state.data}</h1>
 				</div>
 			</div>
 		);
