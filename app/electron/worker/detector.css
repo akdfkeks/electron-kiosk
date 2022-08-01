@@ -22,11 +22,11 @@ video {
 	height: inherit;
 }
 
-.ButtonContainer {
+/* .ButtonContainer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
+} */
 
 .VideoContainer {
 	width: 480px;
