@@ -7,10 +7,10 @@ contextBridge.exposeInMainWorld("electron", {
 			ipcRenderer.send(channel, data);
 		}
 	},
-	receive: (channel, func) => {
-		let validChannels = ["fromMain"]; // IPC채널들 추가
+	receive: (channel, callback) => {
+		let validChannels = ["updateInterface", "detectedScore"];
 		if (validChannels.includes(channel)) {
-			ipcRenderer.on(channel, (event, ...args) => func(...args));
+			ipcRenderer.on(channel, (event, ...args) => callback(args[0]));
 		}
 	},
 });
