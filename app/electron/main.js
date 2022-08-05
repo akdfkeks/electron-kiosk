@@ -35,7 +35,7 @@ function startCamService() {
 		height: 360,
 		center: true,
 		//resizable: isDev,
-		show: isDev,
+		show: true,
 		webPreferences: {
 			devTools: true,
 			contextIsolation: true,
@@ -61,5 +61,5 @@ app.on("window-all-closed", () => app.quit());
 function camServiceController(flag) {
 	if (flag) flag = "true";
 	else flag = "false";
-	camService.webContents.send("camServiceController", flag);
+	camService.webContents.send("faceInfo", flag);
 }

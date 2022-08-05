@@ -1,13 +1,13 @@
 const { contextBridge, ipcRenderer } = require("electron");
 const getResult = require("./analyzer.js");
-const faceapi = require("face-api.js");
 const path = require("path");
 
 let cam, video;
 let overlay, faceapiOptions, dims;
-const displaySize = { width: 480, height: 360 }; //
+//const camSize = { width: 480, height: 360 }; //
+const camSize = { width: 480, height: 360 }; //
 const minConfidence = 0.5;
-const DETECTION_COUNT = 5;
+const DETECTION_COUNT = 1;
 
 contextBridge.exposeInMainWorld("faceapi", {
 	init: async (canvas) => {
@@ -16,15 +16,13 @@ contextBridge.exposeInMainWorld("faceapi", {
 		await loadNet()
 			.then(() => {
 				console.log("Model loaded");
-				return initCamera(displaySize.width, displaySize.height);
+				return initCamVideo();
 			})
-			.then((video) => {
+			.then((camera) => {
 				console.log("Camera initialized");
-				cam = video;
+				cam = camera;
 			});
-		ipcRenderer.on("camServiceController", (flag) => {
-			camServiceController(flag);
-		});
+		ipcRenderer.on("camServiceController", (flag) => camServiceController(flag));
 		console.log("Detection Ready");
 	},
 });
@@ -40,23 +38,23 @@ faceapi.env.monkeyPatch({
 
 async function initVariables() {
 	faceapiOptions = new faceapi.SsdMobilenetv1Options({ minConfidence });
-	dims = faceapi.matchDimensions(overlay, displaySize, true);
+	dims = faceapi.matchDimensions(overlay, camSize, true);
 }
 async function loadNet() {
 	await faceapi.loadSsdMobilenetv1Model(path.join(__dirname, "../data/weights"));
 	await faceapi.loadFaceDetectionModel(path.join(__dirname, "../data/weights"));
 }
-async function initCamera(width, height) {
-	video = document.getElementById("cam");
-	video.width = width;
-	video.height = height;
+async function initCamVideo() {
+	video = document.getElementById("camVideo");
+	video.width = camSize.width;
+	video.height = camSize.height;
 
 	const stream = await navigator.mediaDevices.getUserMedia({
 		audio: false,
 		video: {
 			facingMode: "user",
-			width: width,
-			height: height,
+			width: camSize.width,
+			height: camSize.height,
 		},
 	});
 	video.srcObject = stream;
@@ -69,16 +67,19 @@ async function initCamera(width, height) {
 }
 
 async function detectFace() {
-	//const face = await faceapi.detectSingleFace(cam, faceapiOptions);
-	const frame = (await faceapi.fetchImage(cam)) || null;
-	const detection = (await faceapi.detectSingleFace(frame, faceapiOptions)) || null;
-	if (frame && detection) {
-		const resizedResult = faceapi.resizeResults(detection, dims);
-		clearOverlay();
-		faceapi.draw.drawDetections(overlay, resizedResult);
-		return { score: detection.classScore, image: frame };
-	} else {
-		clearOverlay();
+	try {
+		const detection = (await faceapi.detectSingleFace(cam, faceapiOptions)) || null;
+		if (detection) {
+			//const frame = await faceapi.fetchImage(video);
+			const resizedResult = faceapi.resizeResults(detection, dims);
+			clearOverlay();
+			faceapi.draw.drawDetections(overlay, resizedResult);
+			return { score: detection.classScore, image: frame };
+		} else {
+			clearOverlay();
+		}
+	} catch (e) {
+		console.log(e);
 	}
 }
 async function camServiceController(flag) {
@@ -87,7 +88,7 @@ async function camServiceController(flag) {
 	if (status) {
 		try {
 			const temp = await detect();
-			const result = await analyzeFace(temp);
+			//const result = await analyzeFace(temp);
 		} catch (err) {
 			console.log(err);
 		}
@@ -97,12 +98,12 @@ function clearOverlay() {
 	overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
 }
 async function detect() {
-	let result = new Array(DETECTION_COUNT);
+	let data = new Array(DETECTION_COUNT);
 	try {
 		for (let i = 0; i < DETECTION_COUNT; i++) {
-			result[i] = await detectFace();
+			data[i] = await detectFace();
 		}
-		const faceClass = await getResult(result);
+		const faceClass = await getResult(data);
 	} catch (err) {
 		console.log(err);
 	}
