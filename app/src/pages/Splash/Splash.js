@@ -6,8 +6,9 @@ export default function Splash() {
 	const navigate = useNavigate();
 
 	const route = () => {
+		let flag = true;
+		window.electron.send("detectFace", flag.toString());
 		navigate("/selector", {});
-		window.electron.send("detectFace", true);
 		//window.location.hash = "#/selector";
 	};
 

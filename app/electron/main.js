@@ -27,7 +27,10 @@ function startCamService() {
 	if (camService) return;
 
 	systemPreferences.askForMediaAccess("camera").then((allowed) => {
-		if (!allowed) alert("Camera not available");
+		if (!allowed) {
+			alert("Camera not available");
+			app.quit();
+		}
 	});
 
 	camService = new BrowserWindow({
@@ -37,9 +40,10 @@ function startCamService() {
 		//resizable: isDev,
 		show: true,
 		webPreferences: {
+			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.join(__dirname, "./worker/detectPreload.js"),
+			preload: path.join(__dirname, "./worker/function/detectPreload.js"),
 		},
 	});
 	camService.loadURL(`file://${path.join(__dirname, "./worker/detector.html")}`);
@@ -50,7 +54,9 @@ app.whenReady().then(() => {
 	createMainWindow();
 	startCamService();
 
-	ipcMain.on("detectFace", (flag) => camServiceController(flag));
+	mainWindow.on("close", () => app.quit());
+
+	ipcMain.on("detectFace", (event, ...args) => camServiceController(args[0]));
 	ipcMain.on("detectedScore", (event, payload) => {
 		console.log(payload);
 	});
@@ -59,7 +65,5 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => app.quit());
 
 function camServiceController(flag) {
-	if (flag) flag = "true";
-	else flag = "false";
 	camService.webContents.send("faceInfo", flag);
 }
