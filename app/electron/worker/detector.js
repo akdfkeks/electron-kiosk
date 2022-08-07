@@ -1,8 +1,6 @@
-const canvas = document.getElementById("overlay");
-
 window.onload = async () => {
 	try {
-		await window.faceapi.init(canvas);
+		await window.preload.init();
 	} catch (e) {
 		console.log(e);
 	}
