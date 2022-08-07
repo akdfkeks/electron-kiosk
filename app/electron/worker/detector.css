@@ -12,8 +12,8 @@ body {
 
 canvas {
 	position: absolute;
-	/* width: inherit;
-	height: inherit; */
+	top: 0;
+	left: 0;
 }
 
 video {
@@ -30,7 +30,5 @@ video {
 	width: 480px;
 	height: 360px;
 	display: block;
-}
-.overlay {
-	position: absolute;
+	position: relative;
 }
