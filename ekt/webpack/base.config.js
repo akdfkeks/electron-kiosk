@@ -1,0 +1,35 @@
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
+const isDev = process.env.NODE_ENV !== "production";
+const { resolve } = require("path");
+
+const base = {
+	mode: isDev ? "development" : "production",
+
+	stats: "minimal",
+
+	performance: {
+		hints: false,
+	},
+
+	resolve: {
+		extensions: [".js", ".jsx"],
+		alias: {
+			"~": resolve(),
+		},
+	},
+
+	optimization: { usedExports: true },
+
+	module: {
+		rules: [
+			{
+				test: /\.(js|ts|tsx|jsx)$/,
+				loader: "swc-loader",
+				exclude: /node_modules/,
+			},
+		],
+	},
+	plugins: [new SimpleProgressWebpackPlugin({ format: "minimal" })],
+};
+
+module.exports = base;

@@ -1,0 +1,22 @@
+{
+	"appId": "com.example.electron",
+	"productName": "Electron Kiosk",
+	"directories": {
+		"app": "build",
+		"output": "dist"
+	},
+	"mac": {
+		"icon": "./resources/icons/icon.icns"
+	},
+	"dmg": {
+		"icon": false
+	},
+	"win": {
+		"icon": "./resources/icons/icon.ico",
+		"target": [
+			"nsis",
+			"portable",
+			"zip"
+		]
+	}
+}
