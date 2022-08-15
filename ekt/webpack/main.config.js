@@ -10,7 +10,8 @@ const mainConfig = {
 
 	entry: {
 		index: resolve(DIR.ENTRY.MAIN),
-		bridge: resolve(DIR.ENTRY.BRIDGE),
+		mainPreload: resolve(DIR.ENTRY.MAIN_PRELOAD),
+		detectorPreload: resolve(DIR.ENTRY.DETECTOR_PRELOAD),
 	},
 	output: {
 		path: resolve(DIR.BUILD),

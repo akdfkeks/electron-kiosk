@@ -30,13 +30,13 @@
 		]
 	},
 	"dependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.2.1",
 		"@mediapipe/face_detection": "^0.4.1646425229",
 		"@tensorflow-models/face-detection": "^1.0.1",
 		"@tensorflow/tfjs-backend-webgl": "^3.19.0",
-		"@tensorflow/tfjs-node": "^3.19.0"
+		"@tensorflow/tfjs-node": "^3.19.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.2.1"
 	},
 	"devDependencies": {
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
@@ -45,6 +45,7 @@
 		"concurrently": "^7.2.2",
 		"copy-webpack-plugin": "^11.0.0",
 		"cross-env": "^7.0.3",
+		"css-loader": "^6.7.1",
 		"electron": "^19.0.6",
 		"electron-builder": "^23.1.0",
 		"electron-devtools-installer": "^3.2.0",
