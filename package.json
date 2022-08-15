@@ -20,6 +20,8 @@
 		"build:main": "webpack --config ./ekt/webpack/main.config.js",
 		"build:renderer": "webpack --config ./ekt/webpack/renderer.config.js",
 		"postbuild": "node ./ekt/scripts/postbuild.js",
+		"postinstall": "yarn r install:deps build",
+		"install:deps": "electron-builder install-app-deps",
 		"dist": "yarn build && electron-builder --config ./ekt/config/builderConfig.json",
 		"clear": "yarn rimraf dist",
 		"r": "yarn run-s"
@@ -61,6 +63,7 @@
 		"wait-on": "^6.0.1",
 		"webpack": "^5.73.0",
 		"webpack-cli": "^4.10.0",
-		"webpack-dev-server": "^4.9.3"
+		"webpack-dev-server": "^4.9.3",
+		"webpack-node-externals": "^3.0.0"
 	}
 }

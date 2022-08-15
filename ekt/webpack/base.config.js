@@ -30,6 +30,9 @@ const base = {
 		],
 	},
 	plugins: [new SimpleProgressWebpackPlugin({ format: "minimal" })],
+	stats: {
+		errorDetails: true,
+	},
 };
 
 module.exports = base;

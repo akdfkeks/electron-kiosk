@@ -5,7 +5,7 @@ const path = require("path");
 let mainWindow = null,
 	camService = null;
 
-function createMainWindow() {
+module.exports = function createMainWindow() {
 	mainWindow = new BrowserWindow({
 		width: 834,
 		height: 1194,
@@ -17,7 +17,7 @@ function createMainWindow() {
 			devTools: true,
 			sandbox: false,
 			contextIsolation: true,
-			preload: path.join(__dirname, "./function/preload.js"),
+			preload: path.resolve("./preload/mainPreload.js"),
 		},
 	});
 
@@ -29,7 +29,7 @@ function createMainWindow() {
 	});
 
 	startCamService();
-}
+};
 
 function startCamService() {
 	if (camService) return;
@@ -51,7 +51,7 @@ function startCamService() {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			//preload: path.join(__dirname, "./worker/function/detectPreload.js"),
+			preload: path.resolve("./preload/detectPreload.js"),
 		},
 	});
 	camService.loadFile("index.html", { hash: "detector" });
