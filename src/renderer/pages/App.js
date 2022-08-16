@@ -16,7 +16,7 @@ export default class App extends Component {
 		return (
 			<HashRouter>
 				<Routes>
-					<Route path="/" element={<Splash />} />
+					<Route path="/splash" element={<Splash />} />
 					<Route path="/selector" element={<Selector />} />
 					<Route path="/order" element={<Order />} />
 					<Route path="/payment" element={<Payment />} />

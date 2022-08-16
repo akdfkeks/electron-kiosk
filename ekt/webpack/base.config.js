@@ -17,6 +17,7 @@ const base = {
 			"~": resolve(),
 		},
 	},
+	devtool: isDev ? "eval-source-map" : "source-map",
 
 	optimization: { usedExports: true },
 

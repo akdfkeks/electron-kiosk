@@ -1,6 +1,4 @@
-module.exports = {
-	parseBoolean: function (value) {
-		if (value == "true") return true;
-		else return false;
-	},
-};
+export function parseBoolean(value) {
+	if (value == "true") return true;
+	else return false;
+}

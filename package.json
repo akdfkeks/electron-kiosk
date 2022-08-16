@@ -14,7 +14,7 @@
 		"dev": "concurrently \"cross-env BROWSER=none yarn dev:renderer\" \"wait-on -l $npm_package_devServer && yarn dev:main\"",
 		"dev:main": "cross-env NODE_ENV=development yarn r build:main dev:electronmon",
 		"dev:renderer": "cross-env NODE_ENV=development yarn r build:renderer dev:server",
-		"dev:electronmon": "yarn electronmon $npm_package_main",
+		"dev:electronmon": "yarn electron $npm_package_main",
 		"dev:server": "webpack serve --config ./ekt/webpack/renderer.config.js",
 		"build": "cross-env NODE_ENV=production yarn r clear build:main build:renderer",
 		"build:main": "webpack --config ./ekt/webpack/main.config.js",
@@ -28,7 +28,7 @@
 	},
 	"electronmon": {
 		"patterns": [
-			"src/**/*.js"
+			"src/renderer/**/*.js"
 		]
 	},
 	"dependencies": {
@@ -48,8 +48,8 @@
 		"copy-webpack-plugin": "^11.0.0",
 		"cross-env": "^7.0.3",
 		"css-loader": "^6.7.1",
-		"electron": "^19.0.6",
-		"electron-builder": "^23.1.0",
+		"electron": "^20.0.2",
+		"electron-builder": "^23.3.3",
 		"electron-devtools-installer": "^3.2.0",
 		"electron-react-devtools": "^0.5.3",
 		"electronmon": "^2.0.2",

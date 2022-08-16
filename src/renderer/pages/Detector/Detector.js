@@ -12,8 +12,8 @@ export default class Detector extends Component {
 	render() {
 		return (
 			<div className="WorkerContainer">
-				<div class="VideoContainer">
-					<video id="videowithcam" autoplay muted></video>
+				<div className="VideoContainer">
+					<video id="videowithcam" autoPlay muted></video>
 					<canvas id="overlay"></canvas>
 				</div>
 			</div>

@@ -1,3 +1,16 @@
 export default function Splash() {
-	return <div></div>;
+	return (
+		<div>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+			<h1>Splash</h1>
+		</div>
+	);
 }

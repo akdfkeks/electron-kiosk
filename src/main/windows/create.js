@@ -1,59 +1,62 @@
-const { BrowserWindow } = require("electron");
+import { BrowserWindow, app } from "electron";
+import path from "path";
 const isDev = process.env.NODE_ENV === "development";
-const path = require("path");
 
-let mainWindow = null,
-	camService = null;
+const DEVSERVER = "http://localhost:3000";
 
-module.exports = function createMainWindow() {
-	mainWindow = new BrowserWindow({
+export async function MainWindow() {
+	const window = createWindow({
+		entry: "splash",
+		show: true,
 		width: 834,
 		height: 1194,
 		center: true,
-		resizable: isDev,
+		resizable: false,
 		//kiosk: !isDev,
-		show: true,
 		webPreferences: {
-			devTools: true,
 			sandbox: false,
+			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve("./preload/mainPreload.js"),
+			preload: path.resolve(__dirname, "./preload/mainPreload.js"),
+			//preload: path.resolve("./preload", "mainPreload.js"),
 		},
 	});
-
-	if (isDev) mainWindow.loadURL("http://localhost:3000");
-	else mainWindow.loadFile("index.html");
-
-	mainWindow.on("close", () => {
+	window.on("close", () => {
 		app.quit();
 	});
 
-	startCamService();
-};
+	return window;
+}
 
-function startCamService() {
-	if (camService) return;
-
-	systemPreferences.askForMediaAccess("camera").then((allowed) => {
-		if (!allowed) {
-			alert("Camera not available");
-			app.quit();
-		}
-	});
-
-	camService = new BrowserWindow({
+export async function DetectorWindow() {
+	const window = createWindow({
+		entry: "detector",
+		show: true,
 		width: 480,
 		height: 360,
 		center: true,
 		//resizable: isDev,
-		show: true,
 		webPreferences: {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve("./preload/detectPreload.js"),
+			preload: path.resolve(__dirname, "./preload/detectorPreload.js"),
+
+			//preload: path.resolve("./preload", "detectorPreload.js"),
 		},
 	});
-	camService.loadFile("index.html", { hash: "detector" });
-	camService.on("closed", () => (camService = null));
+
+	return window;
 }
+
+function createWindow({ entry, ...settings }) {
+	const window = new BrowserWindow(settings);
+	const devServer = `${DEVSERVER}#/${entry}`;
+
+	if (isDev) window.loadURL(devServer);
+	else window.loadFile("index.html", { hash: `/${entry}` });
+
+	return window;
+}
+
+//module.exports = { MainWindow, DetectorWindow };
