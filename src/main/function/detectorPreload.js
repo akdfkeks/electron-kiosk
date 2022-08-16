@@ -1,18 +1,18 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { parseBoolean } from "./parseValue.js";
 import { SupportedModels, createDetector } from "@tensorflow-models/face-detection";
-import { setBackend, regularizers, serialization, data, topk } from "@tensorflow/tfjs-node";
+import * as tf from "@tensorflow/tfjs-node";
 import path from "path";
 import "@tensorflow/tfjs-backend-webgl";
-setBackend("webgl");
+tf.setBackend("webgl");
 
 class L2 {
 	static className = "L2";
 	constructor(config) {
-		return regularizers.l1l2(config);
+		return tf.regularizers.l1l2(config);
 	}
 }
-serialization.registerClass(L2);
+tf.serialization.registerClass(L2);
 
 let video, tfcam, detector, analysisModel;
 let overlay, overlayContext;
@@ -25,7 +25,7 @@ contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
 		try {
 			const detectionModel = SupportedModels.MediaPipeFaceDetector;
-			//analysisModel = await tf.loadLayersModel(path.resolve(__dirname, "../resources/model/model.json"));
+			analysisModel = await tf.loadLayersModel(path.resolve(__dirname, "../resources/model/model.json"));
 			initElement();
 			detector = await createDetector(detectionModel, { runtime: "tfjs" });
 			await initVideoWithCam().then((cam) => {
@@ -72,7 +72,7 @@ async function initVideoWithCam() {
 		});
 
 		video.srcObject = stream;
-		tfcam = await data.webcam(video, { resizeWidth: MODELSIZE.width, resizeHeight: MODELSIZE.height });
+		tfcam = await tf.data.webcam(video, { resizeWidth: MODELSIZE.width, resizeHeight: MODELSIZE.height });
 
 		return new Promise((resolve) => {
 			video.onloadeddata = () => {
@@ -104,7 +104,7 @@ async function faceAnalyzer(flag) {
 		const img = await tfcam.capture();
 		const probs = analysisModel.predict(img);
 		const sorted = true;
-		const { values, indices } = topk(probs, topK, sorted);
+		const { values, indices } = tf.topk(probs, topK, sorted);
 		console.log(values, indices);
 	} else faceAnalyzer();
 }
