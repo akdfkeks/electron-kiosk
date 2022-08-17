@@ -1,0 +1,18 @@
+/* 스플래시 창 배경화면색상 */
+.splashTouch {
+    width: 834px;
+    height: 1194px;
+    background-color: #F8C100;
+    text-align: center;
+}
+
+.logo {
+    position: absolute;
+    width: 602px;
+    height: 602px;
+    left: 116px;
+    top: 214px;
+    background-color: white;
+    border-radius: 602px;
+    align-items: center;
+}

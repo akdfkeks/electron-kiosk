@@ -1,0 +1,35 @@
+.order-background {
+    width: 834px;
+    height: 1194px;
+    background-color: #F8C100;
+    text-align: center;
+}
+
+.category {
+    margin: auto;
+    border: 1px solid white;
+    background-color: white;
+    text-align: left;
+    color: #F8C100;
+    font-family: Inter;
+    font-style: Bold;
+    font-size: 36px;
+    fill: solid;
+}
+
+.menu {
+    height: 222px;
+    width: 834px;
+    left: 0px;
+    top: 0px;
+    border-radius: 0px;
+}
+
+.menu-item1 {
+    height: 190px;
+    width: 304px;
+    left: 16px;
+    top: 76px;
+    border: none;
+
+}
