@@ -20,7 +20,9 @@ export async function MainWindow() {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(appPath, "./function/mainPreload.js"),
+			preload: isDev
+				? path.resolve(appPath, "./function/mainPreload.js")
+				: path.resolve(appPath, "./main/function/mainPreload.js"),
 		},
 	});
 	window.on("close", () => {
@@ -37,13 +39,16 @@ export async function DetectorWindow() {
 		show: true,
 		width: 480,
 		height: 360,
+		titleBarStyle: "hidden",
 		center: true,
-		//resizable: isDev,
+		resizable: false,
 		webPreferences: {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(appPath, "./function/detectorPreload.js"),
+			preload: isDev
+				? path.resolve(appPath, "./function/detectorPreload.js")
+				: path.resolve(appPath, "./main/function/detectorPreload.js"),
 		},
 	});
 	window.setName;
