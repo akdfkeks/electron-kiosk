@@ -25,12 +25,45 @@ const rendererConfig = {
 					filename: "./resources/assets/Images/[hash][ext]",
 				},
 			},
+			{
+				test: /\.[jt]sx?$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: require.resolve("swc-loader"),
+						options: {
+							jsc: {
+								transform: {
+									react: {
+										development: isDev,
+										refresh: isDev,
+									},
+								},
+							},
+						},
+					},
+				],
+			},
 		],
+	},
+	devServer: {
+		port: APP_CONFIG.DEVSERVER.split(":")?.[2],
+		historyApiFallback: true,
+		compress: true,
+		hot: true,
+		client: {
+			overlay: true,
+		},
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
 			template: resolve(DIR.INDEX_HTML),
 			filename: "index.html",
+		}),
+		new webpack.DefinePlugin({
+			process: JSON.stringify({
+				platform: process.platform,
+			}),
 		}),
 	],
 };
