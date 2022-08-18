@@ -4,16 +4,9 @@ export default function Splash() {
 	return (
 		<div>
 			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
-			<h1>Splash</h1>
 			<img src={mokoko1}></img>
+			<img src={mokoko1}></img>
+			<h1>Splash</h1>
 		</div>
 	);
 }

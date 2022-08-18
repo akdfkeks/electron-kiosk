@@ -1,9 +1,11 @@
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const base = require("./base.config.js");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { merge } = require("webpack-merge");
 const { APP_CONFIG } = require("../config/appConfig.js");
 const { DIR } = APP_CONFIG;
 const { resolve } = require("path");
+const webpack = require("webpack");
 const isDev = process.env.NODE_ENV !== "production";
 
 const rendererConfig = {
@@ -56,6 +58,7 @@ const rendererConfig = {
 		},
 	},
 	plugins: [
+		isDev && new ReactRefreshWebpackPlugin(),
 		new HTMLWebpackPlugin({
 			template: resolve(DIR.INDEX_HTML),
 			filename: "index.html",
@@ -65,7 +68,7 @@ const rendererConfig = {
 				platform: process.platform,
 			}),
 		}),
-	],
+	].filter(Boolean),
 };
 
 module.exports = merge(base, rendererConfig);
