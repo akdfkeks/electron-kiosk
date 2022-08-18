@@ -5,18 +5,29 @@
 		"app": "build",
 		"output": "dist"
 	},
+	"files": [
+		"main",
+		"renderer",
+		"resoruces",
+		"node_modules",
+		"package.json"
+	],
 	"mac": {
-		"icon": "./resources/icons/icon.icns"
+		"icon": null
 	},
 	"dmg": {
-		"icon": false
+		"icon": null,
+		"writeUpdateInfo": false
 	},
 	"win": {
-		"icon": "./resources/icons/icon.ico",
+		"icon": null,
 		"target": [
 			"nsis",
 			"portable",
 			"zip"
 		]
+	},
+	"nsis": {
+		"differentialPackage": false
 	}
 }

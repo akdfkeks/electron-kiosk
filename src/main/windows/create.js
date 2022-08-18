@@ -17,7 +17,7 @@ export async function MainWindow() {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(__dirname, "./preload/mainPreload.js"),
+			//preload: path.resolve(__dirname, "./function/mainPreload.js"),
 			//preload: path.resolve("./preload", "mainPreload.js"),
 		},
 	});
@@ -40,7 +40,7 @@ export async function DetectorWindow() {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(__dirname, "./preload/detectorPreload.js"),
+			//preload: path.resolve(__dirname, "./function/detectorPreload.js"),
 
 			//preload: path.resolve("./preload", "detectorPreload.js"),
 		},
@@ -54,7 +54,13 @@ function createWindow({ entry, ...settings }) {
 	const devServer = `${DEVSERVER}#/${entry}`;
 
 	if (isDev) window.loadURL(devServer);
-	else window.loadFile("index.html", { hash: `/${entry}` });
+	else {
+		const appPath = app.getAppPath();
+		console.log(appPath);
+		window.loadFile(path.resolve(appPath, "./renderer", "./index.html"), {
+			hash: `/${entry}`,
+		});
+	}
 
 	return window;
 }

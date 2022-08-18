@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import { parseBoolean } from "./parseValue.js";
 import { SupportedModels, createDetector } from "@tensorflow-models/face-detection";
 import * as tf from "@tensorflow/tfjs-node";
-import path from "path";
+import * as path from "path";
 import "@tensorflow/tfjs-backend-webgl";
 tf.setBackend("webgl");
 
@@ -25,7 +25,9 @@ contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
 		try {
 			const detectionModel = SupportedModels.MediaPipeFaceDetector;
-			analysisModel = await tf.loadLayersModel(path.resolve(__dirname, "../resources/model/model.json"));
+			analysisModel = await tf.loadLayersModel(
+				path.resolve(__dirname, "../resources/model/model.json")
+			);
 			initElement();
 			detector = await createDetector(detectionModel, { runtime: "tfjs" });
 			await initVideoWithCam().then((cam) => {
@@ -72,7 +74,10 @@ async function initVideoWithCam() {
 		});
 
 		video.srcObject = stream;
-		tfcam = await tf.data.webcam(video, { resizeWidth: MODELSIZE.width, resizeHeight: MODELSIZE.height });
+		tfcam = await tf.data.webcam(video, {
+			resizeWidth: MODELSIZE.width,
+			resizeHeight: MODELSIZE.height,
+		});
 
 		return new Promise((resolve) => {
 			video.onloadeddata = () => {
