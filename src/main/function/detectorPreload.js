@@ -25,9 +25,9 @@ contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
 		try {
 			const detectionModel = SupportedModels.MediaPipeFaceDetector;
-			analysisModel = await tf.loadLayersModel(
-				path.resolve(__dirname, "../resources/model/model.json")
-			);
+			// analysisModel = await tf.loadLayersModel(
+			// 	path.resolve(appPath, "./renderer/resources/models/model.json")
+			// );
 			initElement();
 			detector = await createDetector(detectionModel, { runtime: "tfjs" });
 			await initVideoWithCam().then((cam) => {

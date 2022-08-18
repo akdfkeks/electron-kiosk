@@ -7,7 +7,7 @@ export async function setUpWindow(createWindow) {
 	// if (isDev) {
 	// 	await installExtension(REACT_DEVELOPER_TOOLS, { forceDownload: false });
 	// }
-	let window = createWindow();
+	let window = await createWindow();
 
 	// Add Ipc channel ...
 

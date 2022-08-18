@@ -1,9 +1,11 @@
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const base = require("./base.config.js");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { merge } = require("webpack-merge");
 const { APP_CONFIG } = require("../config/appConfig.js");
 const { DIR } = APP_CONFIG;
 const { resolve } = require("path");
+const webpack = require("webpack");
 const isDev = process.env.NODE_ENV !== "production";
 
 const rendererConfig = {
@@ -25,14 +27,48 @@ const rendererConfig = {
 					filename: "./resources/assets/Images/[hash][ext]",
 				},
 			},
+			{
+				test: /\.[jt]sx?$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: require.resolve("swc-loader"),
+						options: {
+							jsc: {
+								transform: {
+									react: {
+										development: isDev,
+										refresh: isDev,
+									},
+								},
+							},
+						},
+					},
+				],
+			},
 		],
 	},
+	devServer: {
+		port: APP_CONFIG.DEVSERVER.split(":")?.[2],
+		historyApiFallback: true,
+		compress: true,
+		hot: true,
+		client: {
+			overlay: true,
+		},
+	},
 	plugins: [
+		isDev && new ReactRefreshWebpackPlugin(),
 		new HTMLWebpackPlugin({
 			template: resolve(DIR.INDEX_HTML),
 			filename: "index.html",
 		}),
-	],
+		new webpack.DefinePlugin({
+			process: JSON.stringify({
+				platform: process.platform,
+			}),
+		}),
+	].filter(Boolean),
 };
 
 module.exports = merge(base, rendererConfig);
