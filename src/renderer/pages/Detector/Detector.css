@@ -8,6 +8,7 @@
 	justify-content: center;
 	align-items: center;
 	background-color: gray;
+	-webkit-app-region: drag;
 }
 
 canvas {
