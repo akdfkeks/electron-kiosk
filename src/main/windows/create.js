@@ -10,9 +10,11 @@ export async function MainWindow() {
 	const window = createWindow({
 		entry: "splash",
 		title: "Electron Kiosk",
+		titleBarStyle: "hidden",
 		show: true,
 		width: 834,
 		height: 1194,
+		// useContentSize: true,
 		center: true,
 		resizable: false,
 		//kiosk: !isDev,
@@ -36,10 +38,11 @@ export async function DetectorWindow() {
 	const window = createWindow({
 		entry: "detector",
 		title: "Detector",
+		titleBarStyle: "hidden",
 		show: true,
 		width: 480,
 		height: 360,
-		titleBarStyle: "hidden",
+		// useContentSize: true,
 		center: true,
 		resizable: false,
 		webPreferences: {
