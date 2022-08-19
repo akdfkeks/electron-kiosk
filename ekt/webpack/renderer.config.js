@@ -1,48 +1,32 @@
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack");
-const { resolve } = require("path");
-
 const base = require("./base.config.js");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const { merge } = require("webpack-merge");
 const { APP_CONFIG } = require("../config/appConfig.js");
 const { DIR } = APP_CONFIG;
-const { isModuleAvailable, isDev } = require("./utils.js");
-const isSassAvailable = isModuleAvailable("sass") && isModuleAvailable("sass-loader");
+const { resolve } = require("path");
+const webpack = require("webpack");
+const isDev = process.env.NODE_ENV !== "production";
 
-module.exports = {
-	target: "web",
-	entry: resolve(DIR.ENTRY.RENDERER),
-
-	...base,
-
-	resolve: {
-		...base.resolve,
-		alias: {
-			...base.resolve.alias,
-			react: resolve("node_modules", "react"),
-		},
+const rendererConfig = {
+	entry: {
+		index: resolve(DIR.ENTRY.RENDERER),
 	},
-
-	devServer: {
-		port: APP_CONFIG.DEVSERVER.split(":")?.[2],
-		historyApiFallback: true,
-		compress: true,
-		hot: true,
-		client: {
-			overlay: true,
-		},
-	},
-
 	output: {
-		path: resolve(DIR.BUILD),
-		filename: "renderer.js",
+		filename: "[name].js",
+		path: resolve(DIR.OUTPUT.RENDERER),
+		//publicPath: "./resources/assets",
 	},
-
 	module: {
 		rules: [
-			...base.module.rules,
-
+			{ test: /\.css$/i, use: ["style-loader", "css-loader"] },
+			{
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				type: "asset/resource",
+				generator: {
+					filename: "./resources/assets/Images/[hash][ext]",
+				},
+			},
 			{
 				test: /\.[jt]sx?$/,
 				exclude: /node_modules/,
@@ -62,66 +46,29 @@ module.exports = {
 					},
 				],
 			},
-
-			{
-				test: /\.css$/,
-				use: ["style-loader", "css-loader"],
-			},
-
-			isSassAvailable && {
-				test: /\.s(a|c)ss$/,
-				use: [
-					"style-loader",
-					{
-						loader: "css-loader",
-						options: { modules: true },
-					},
-					"sass-loader",
-				],
-				include: /\.module\.s(a|c)ss$/,
-			},
-
-			isSassAvailable && {
-				test: /\.s(a|c)ss$/,
-				use: ["style-loader", "css-loader", "sass-loader"],
-				exclude: /\.module\.s(a|c)ss$/,
-			},
-
-			{
-				test: /\.(woff|woff2|eot|ttf|otf|png|jpe?g|gif)$/,
-				use: ["file-loader"],
-			},
-
-			{
-				test: /\.svg$/,
-				issuer: /\.[jt]sx?$/,
-				loader: "@svgr/webpack",
-			},
-		].filter(Boolean),
+		],
 	},
-
+	devServer: {
+		port: APP_CONFIG.DEVSERVER.split(":")?.[2],
+		historyApiFallback: true,
+		compress: true,
+		hot: true,
+		client: {
+			overlay: true,
+		},
+	},
 	plugins: [
-		...base.plugins,
-
 		isDev && new ReactRefreshWebpackPlugin(),
-
-		new CopyWebpackPlugin({
-			patterns: [
-				{
-					from: resolve(DIR.RESOURCES),
-					to: resolve(DIR.BUILD, "resources"),
-				},
-			],
+		new HTMLWebpackPlugin({
+			template: resolve(DIR.INDEX_HTML),
+			filename: "index.html",
 		}),
-
 		new webpack.DefinePlugin({
 			process: JSON.stringify({
 				platform: process.platform,
 			}),
 		}),
-
-		new HTMLWebpackPlugin({
-			template: resolve(DIR.INDEX_HTML),
-		}),
 	].filter(Boolean),
 };
+
+module.exports = merge(base, rendererConfig);

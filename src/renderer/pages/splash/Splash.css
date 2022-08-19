@@ -6,7 +6,18 @@
     text-align: center;
 }
 
-/* 로고창 추후에 이미지 넣을것 */
+.pleaseTouch {
+    width: 536px;
+    height: 45px;
+    position: absolute;
+    left: 149px;
+    top: 1094px;
+    color: white;
+    font-size: 36px;
+    font-style: Medium;
+}
+
+/* 로고창 추후에 이미지 변경할것 */
 .logo {
     position: absolute;
     width: 602px;

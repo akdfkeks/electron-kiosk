@@ -1,12 +1,15 @@
 import { BrowserWindow, app } from "electron";
 import path from "path";
+
 const isDev = process.env.NODE_ENV === "development";
 
 const DEVSERVER = "http://localhost:3000";
+let appPath = app.getAppPath();
 
 export async function MainWindow() {
 	const window = createWindow({
 		entry: "splash",
+		title: "Electron Kiosk",
 		show: true,
 		width: 834,
 		height: 1194,
@@ -17,8 +20,9 @@ export async function MainWindow() {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(__dirname, "./preload/mainPreload.js"),
-			//preload: path.resolve("./preload", "mainPreload.js"),
+			preload: isDev
+				? path.resolve(appPath, "./function/mainPreload.js")
+				: path.resolve(appPath, "./main/function/mainPreload.js"),
 		},
 	});
 	window.on("close", () => {
@@ -31,21 +35,23 @@ export async function MainWindow() {
 export async function DetectorWindow() {
 	const window = createWindow({
 		entry: "detector",
+		title: "Detector",
 		show: true,
 		width: 480,
 		height: 360,
+		titleBarStyle: "hidden",
 		center: true,
-		//resizable: isDev,
+		resizable: false,
 		webPreferences: {
 			sandbox: false,
 			devTools: true,
 			contextIsolation: true,
-			preload: path.resolve(__dirname, "./preload/detectorPreload.js"),
-
-			//preload: path.resolve("./preload", "detectorPreload.js"),
+			preload: isDev
+				? path.resolve(appPath, "./function/detectorPreload.js")
+				: path.resolve(appPath, "./main/function/detectorPreload.js"),
 		},
 	});
-
+	window.setName;
 	return window;
 }
 
@@ -54,7 +60,12 @@ function createWindow({ entry, ...settings }) {
 	const devServer = `${DEVSERVER}#/${entry}`;
 
 	if (isDev) window.loadURL(devServer);
-	else window.loadFile("index.html", { hash: `/${entry}` });
+	else {
+		//const appPath = app.getAppPath();
+		window.loadFile(path.resolve(appPath, "./renderer", "./index.html"), {
+			hash: `/${entry}`,
+		});
+	}
 
 	return window;
 }

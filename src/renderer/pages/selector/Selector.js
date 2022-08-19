@@ -1,16 +1,18 @@
 import React from "react";
 import "./Selector.css";
 import { Link } from "react-router-dom";
+import store from "./../../../resources/assets/images/store.png";
+import takeout from "./../../../resources/assets/images/takeout.png";
 
 const Selector = () => {
   return (
     <>
       <div className="selector-background">
         <Link to="/splash">
-          <div className="store">매장</div>
+          <img className="store" src={store} alt="store" />
         </Link>
         <Link to="/order">
-          <div className="take-out">포장</div>
+          <img className="take-out" src={takeout} alt="take-out" />
         </Link>
       </div>
     </>

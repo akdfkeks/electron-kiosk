@@ -1,7 +1,7 @@
 {
 	"name": "electron-kiosk",
 	"version": "1.0.0",
-	"main": "build/index.js",
+	"main": "build/main/index.js",
 	"devServer": "http://localhost:3000",
 	"repository": "https://github.com/akdfkeks/electron-kiosk",
 	"author": {
@@ -16,13 +16,13 @@
 		"dev:renderer": "cross-env NODE_ENV=development yarn r build:renderer dev:server",
 		"dev:electronmon": "yarn electron $npm_package_main",
 		"dev:server": "webpack serve --config ./ekt/webpack/renderer.config.js",
-		"build": "cross-env NODE_ENV=production yarn r clear build:main build:renderer",
+		"build": "cross-env NODE_ENV=production yarn r build:main build:renderer",
 		"build:main": "webpack --config ./ekt/webpack/main.config.js",
 		"build:renderer": "webpack --config ./ekt/webpack/renderer.config.js",
 		"postbuild": "node ./ekt/scripts/postbuild.js",
 		"postinstall": "yarn r install:deps build",
 		"install:deps": "electron-builder install-app-deps",
-		"dist": "yarn build && electron-builder --config ./ekt/config/builderConfig.json",
+		"dist": "yarn r clear build && electron-builder --config ./ekt/config/builderConfig.json",
 		"clear": "yarn rimraf dist",
 		"r": "yarn run-s"
 	},
@@ -36,6 +36,7 @@
 		"@tensorflow-models/face-detection": "^1.0.1",
 		"@tensorflow/tfjs-backend-webgl": "^3.19.0",
 		"@tensorflow/tfjs-node": "^3.19.0",
+		"path": "^0.12.7",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.3.0",
@@ -54,6 +55,7 @@
 		"electron-devtools-installer": "^3.2.0",
 		"electron-react-devtools": "^0.5.3",
 		"electronmon": "^2.0.2",
+		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^5.5.0",
 		"npm-run-all": "^4.1.5",
 		"react-refresh": "^0.14.0",
@@ -65,6 +67,7 @@
 		"webpack": "^5.73.0",
 		"webpack-cli": "^4.10.0",
 		"webpack-dev-server": "^4.9.3",
+		"webpack-merge": "^5.8.0",
 		"webpack-node-externals": "^3.0.0"
 	}
 }
