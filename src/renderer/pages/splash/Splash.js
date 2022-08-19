@@ -1,12 +1,19 @@
-import mokoko1 from "../../../resources/assets/Images/mokoko1.png";
+import React from "react";
+import "./Splash.css";
+import { Link } from "react-router-dom";
+import logoEX from "./../../../resources/assets/images/logoEX.png";
 
-export default function Splash() {
+const Splash = () => {
 	return (
-		<div>
-			<h1>Splash</h1>
-			<img src={mokoko1}></img>
-			<img src={mokoko1}></img>
-			<h1>Splash</h1>
-		</div>
+		<>
+			<Link to="/selector" className="splashTouch">
+				<div className="splashTouch">
+					<h3 className="pleaseTouch">[주문하시려면 화면을 터치해주세요]</h3>
+					<img className="logo" src={logoEX} alt="logo" />
+				</div>
+			</Link>
+		</>
 	);
-}
+};
+
+export default Splash;

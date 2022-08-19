@@ -1,0 +1,52 @@
+/* 주문 창 배경화면색상 */
+.order-background {
+    width: 834px;
+    height: 1194px;
+    background-color: #F8C100;
+    text-align: center;
+}
+
+/* 중간 삽입 선 */
+.line {
+    height: 15px;
+    background-color: white;
+}
+
+/* 최상단 추천메뉴 */
+.best-menu {
+    margin: auto;
+    border: 1px solid white;
+    background-color: white;
+    text-align: left;
+    color: #F8C100;
+    font-family: Inter;
+    font-style: Bold;
+    font-size: 36px;
+    fill: solid;
+}
+
+/* 추천메뉴 박스 */
+.best-menu-box {
+    height: 222px;
+    width: 834px;
+    border-radius: 0px;
+}
+
+/* 추천메뉴  */
+.best-menu1 {
+    width: 318px;
+    height: 190px;
+    border: 0 solid white;
+    border-radius: 24px;
+    background-color: white;
+    margin: 16px 16px 16px 16px;
+}
+
+.best-menu2 {
+    width: 318px;
+    height: 190px;
+    border: 0 solid white;
+    border-radius: 24px;
+    background-color: white;
+    margin: 16px 16px 16px 16px;
+}

@@ -14,7 +14,7 @@ export default class App extends Component {
 	}
 	render() {
 		return (
-			<HashRouter>
+			<HashRouter className="routerContainer">
 				<Routes>
 					<Route path="/splash" element={<Splash />} />
 					<Route path="/selector" element={<Selector />} />
