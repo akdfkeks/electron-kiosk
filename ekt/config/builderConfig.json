@@ -6,8 +6,9 @@
 		"output": "dist"
 	},
 	"files": [
-		"main",
-		"renderer",
+		"index.html",
+		"renderer.js",
+		"preload",
 		"resoruces",
 		"node_modules",
 		"package.json"

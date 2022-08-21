@@ -6,7 +6,7 @@ const packageJSON = require("../../package.json");
 async function createPackageJSONDistVersion() {
 	const { main, scripts, devDependencies, ...restOfPackageJSON } = packageJSON;
 	const packageJSONDistVersion = {
-		main: main.replace("build/", "") || "main/index.js",
+		main: "index.js",
 		...restOfPackageJSON,
 	};
 

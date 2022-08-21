@@ -2,16 +2,3 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
-#transTitleBar {
-	width: 100%;
-	height: 30px;
-	position: absolute;
-	-webkit-app-region: drag;
-	z-index: 1;
-}
-
-#root {
-	position: absolute;
-	z-index: 0;
-}
