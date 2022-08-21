@@ -17,26 +17,26 @@ tf.serialization.registerClass(L2);
 let video, tfcam, detector, analysisModel;
 let overlay, overlayContext;
 let detectionFlag = false;
+
 const FPS = 30;
+const isDev = process.env.NODE_ENV === "development";
 const CAMSIZE = { width: 480, height: 360 }; //
-const MODELSIZE = { width: 224, height: 224 }; //
+const MODELSIZE = { width: 200, height: 200 }; //
+const MODEL_PATH = isDev
+	? path.resolve(__dirname, "../../resources/models/model.json")
+	: path.resolve(__dirname, "./resources/models/model.json");
 
 contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
 		try {
-			const detectionModel = SupportedModels.MediaPipeFaceDetector;
-			// analysisModel = await tf.loadLayersModel(
-			// 	path.resolve(appPath, "./renderer/resources/models/model.json")
-			// );
 			initElement();
-			detector = await createDetector(detectionModel, { runtime: "tfjs" });
+			await initDetector();
 			await initVideoWithCam().then((cam) => {
 				console.log("Camera initialized");
 				setInterval(faceTracker, 1000 / FPS);
 				console.log("Start tracking");
 			});
-			ipcRenderer.on("faceInfo", (event, flag) => faceAnalyzer(flag));
-			console.log("Analysis ready");
+			setIpcChannel();
 		} catch (err) {
 			throw new Error(`Fail to run preload.init() : ${err}`);
 		}
@@ -61,6 +61,18 @@ function initElement() {
 	video.style.transform = "scaleX(-1)";
 }
 
+async function initDetector() {
+	analysisModel = await tf.loadLayersModel(MODEL_PATH);
+	detector = await createDetector(SupportedModels.MediaPipeFaceDetector, {
+		runtime: "tfjs",
+	});
+}
+
+function setIpcChannel() {
+	ipcRenderer.on("faceInfo", (event, flag) => faceAnalyzer(flag));
+	console.log("Analysis ready");
+}
+
 async function initVideoWithCam() {
 	try {
 		const stream = await navigator.mediaDevices.getUserMedia({
@@ -69,7 +81,7 @@ async function initVideoWithCam() {
 				facingMode: "user",
 				width: CAMSIZE.width,
 				height: CAMSIZE.height,
-				frameRate: 30,
+				frameRate: FPS,
 			},
 		});
 
@@ -107,9 +119,12 @@ async function faceAnalyzer(flag) {
 	if (!ctlFlag) throw new Error("Error from faceAnalyzer");
 	if (detectionFlag) {
 		const img = await tfcam.capture();
-		const probs = analysisModel.predict(img);
-		const sorted = true;
-		const { values, indices } = tf.topk(probs, topK, sorted);
-		console.log(values, indices);
+		const resizedData = tf.expandDims(img, 0);
+		const probs = analysisModel.predictOnBatch(resizedData);
+		const value = probs.dataSync()[0];
+		console.log(value);
+		// const sorted = true;
+		// const { values, indices } = tf.topk(probs, topK, sorted);
+		//console.log(values, indices);
 	} else faceAnalyzer();
 }

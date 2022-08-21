@@ -25,15 +25,18 @@ exports.APP_CONFIG = {
 			DETECTOR_PRELOAD: resolve(__dirname, "../../src/main/function/detectorPreload.js"),
 		},
 		OUTPUT: {
-			MAIN: resolve(__dirname, "../../build/main"),
-			RENDERER: resolve(__dirname, "../../build/renderer"),
-			FUNCTION: resolve(__dirname, "../../build/fucntion"),
+			MAIN: resolve(__dirname, "../../build"),
+			FUNCTION: resolve(__dirname, "../../build/function"),
+			RESOURCES: resolve(__dirname, "../../build/resources"),
+			MODELS: resolve(__dirname, "../../build/resources/models"),
+			ASSETS: resolve(__dirname, "../../build/resources/assets"),
 		},
 
 		INDEX_HTML: resolve(__dirname, "../../src/renderer/index.html"),
 		RESOURCES: resolve(__dirname, "../../src/resources/"),
 		ASSETS: resolve(__dirname, "../../src/resources/assets/"),
 		BUILD: resolve(__dirname, "../../build"),
+		MODELS: resolve(__dirname, "../../src/resources/models/"),
 		PKG: resolve(__dirname, "../../dist"),
 	},
 };
