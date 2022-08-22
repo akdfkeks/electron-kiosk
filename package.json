@@ -1,7 +1,7 @@
 {
 	"name": "electron-kiosk",
 	"version": "1.0.0",
-	"main": "build/main/index.js",
+	"main": "build/index.js",
 	"devServer": "http://localhost:3000",
 	"repository": "https://github.com/akdfkeks/electron-kiosk",
 	"author": {

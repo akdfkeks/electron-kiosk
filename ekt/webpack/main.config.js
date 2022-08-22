@@ -8,8 +8,8 @@ const nodeExternals = require("webpack-node-externals");
 const mainConfig = {
 	entry: {
 		index: resolve(DIR.ENTRY.MAIN),
-		"function/mainPreload": resolve(DIR.ENTRY.MAIN_PRELOAD),
-		"function/detectorPreload": resolve(DIR.ENTRY.DETECTOR_PRELOAD),
+		"preload/mainPreload": resolve(DIR.ENTRY.MAIN_PRELOAD),
+		"preload/detectorPreload": resolve(DIR.ENTRY.DETECTOR_PRELOAD),
 	},
 	output: {
 		filename: "[name].js",
