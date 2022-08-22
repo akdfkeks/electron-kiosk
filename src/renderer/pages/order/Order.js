@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Order.css";
 import { Link } from "react-router-dom";
+import Menucategory from "./Menucategory";
 
 const Order = () => {
   return (
@@ -15,6 +16,7 @@ const Order = () => {
           {/* 음 여기 코드 개쓰레기네 좀 더 생각하고 짤것 */}
         </div>
         <hr className="line"></hr>
+        <Menucategory />
         <Link to="/selector">매장포장</Link>
       </div>
     </>
