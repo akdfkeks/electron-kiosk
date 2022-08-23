@@ -1,36 +1,31 @@
 import { app, ipcMain } from "electron";
-import { MainWindow, DetectorWindow } from "./windows/create.js";
-import { setUpWindow, getCameraAccess } from "./setup.js";
+import { createMainWindow, createDetectorWindow } from "./function/createWindow.js";
+import { getCameraAccess } from "./function/setup.js";
 
 let mainWindow, detectorWindow;
 
-function makeAppWithSingleInstanceLock(callback) {
-	const isPrimaryInstance = app.requestSingleInstanceLock();
-	!isPrimaryInstance ? app.quit() : callback();
-}
+app.whenReady().then(async () => {
+	const camIsAvailable = await getCameraAccess();
 
-makeAppWithSingleInstanceLock(async () => {
-	await app.whenReady();
-
-	const hwStatus = await getCameraAccess();
-	if (hwStatus) {
-		mainWindow = await setUpWindow(MainWindow);
-		detectorWindow = await setUpWindow(DetectorWindow);
-
-		ipcMain.on("detectFace", (event, ...args) => camServiceController(args[0]));
-		ipcMain.on("detectedScore", (event, payload) => {
-			console.log(payload);
-		});
-	} else {
+	if (!camIsAvailable) {
+		alert("Camera is not available!");
 		app.quit();
 	}
+
+	mainWindow = await createMainWindow();
+	detectorWindow = await createDetectorWindow();
+
+	mainWindow.on("close", () => {
+		mainWindow = null;
+		detectorWindow = null;
+		app.quit();
+	});
+
+	ipcMain.on("detectFace", (event, ...args) => detectorController(args[0]));
 });
 
-function camServiceController(flag) {
+app.on("window-all-closed", () => app.quit());
+
+function detectorController(flag) {
 	detectorWindow.webContents.send("faceInfo", flag);
 }
-/*
-MainWindow, DetectorWindow : 창을 만들어주는 함수.
-setUpWindow : 위의 함수를 전달받아 창을 생성하고, ipc 채널 등에 대한 설정을 함
-
-*/

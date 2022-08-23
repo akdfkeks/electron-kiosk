@@ -21,8 +21,8 @@ exports.APP_CONFIG = {
 		ENTRY: {
 			MAIN: resolve(__dirname, "../../src/main/index.js"),
 			RENDERER: resolve(__dirname, "../../src/renderer/index.jsx"),
-			MAIN_PRELOAD: resolve(__dirname, "../../src/main/function/mainPreload.js"),
-			DETECTOR_PRELOAD: resolve(__dirname, "../../src/main/function/detectorPreload.js"),
+			MAIN_PRELOAD: resolve(__dirname, "../../src/main/preload/mainPreload.js"),
+			DETECTOR_PRELOAD: resolve(__dirname, "../../src/main/preload/detectorPreload.js"),
 		},
 		OUTPUT: {
 			MAIN: resolve(__dirname, "../../build"),
