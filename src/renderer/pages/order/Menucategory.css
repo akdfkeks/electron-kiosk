@@ -3,7 +3,9 @@
     height: 50px;
     background-color: #F8C100;
     color: white;
-    border: 0px #F8C100;
+    border: 1px solid white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     margin: 0px;
     font-family: Inter;
     font-style: semi bold;
@@ -15,7 +17,9 @@
     height: 50px;
     background-color: #F8C100;
     color: white;
-    border: 0px #F8C100;
+    border: 1px solid white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     margin: 0px;
     font-family: Inter;
     font-style: semi bold;
@@ -27,7 +31,9 @@
     height: 50px;
     background-color: #F8C100;
     color: white;
-    border: 0px #F8C100;
+    border: 1px solid white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     margin: 0px;
     font-family: Inter;
     font-style: semi bold;
@@ -39,7 +45,9 @@
     height: 50px;
     background-color: #F8C100;
     color: white;
-    border: 0px #F8C100;
+    border: 1px solid white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     margin: 0px;
     font-family: Inter;
     font-style: semi bold;

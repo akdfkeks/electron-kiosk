@@ -1,0 +1,9 @@
+.btn-menu {
+    width: 246px;
+    height: 180px;
+    background-color: white;
+
+    border: 1px solid #F8C100;
+    border-radius: 24px;
+    margin: 12px;
+}

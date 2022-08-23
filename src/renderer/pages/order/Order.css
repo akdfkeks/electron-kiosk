@@ -21,7 +21,7 @@
     text-align: left;
     color: #F8C100;
     font-family: Inter;
-    font-style: Bold;
+    font-style: Medium;
     font-size: 36px;
     fill: solid;
 }
@@ -29,7 +29,7 @@
 /* 추천메뉴 박스 */
 .best-menu-box {
     height: 222px;
-    width: 834px;
+    width: 100%;
     border-radius: 0px;
     overflow-x: scroll;
 }
@@ -40,7 +40,7 @@
 
 /* 추천메뉴  */
 .best-menu1 {
-    width: 240px;
+    width: 312px;
     height: 190px;
     border: 0 solid white;
     border-radius: 24px;
@@ -49,7 +49,7 @@
 }
 
 .best-menu2 {
-    width: 240px;
+    width: 312px;
     height: 190px;
     border: 0 solid white;
     border-radius: 24px;
@@ -58,7 +58,7 @@
 }
 
 .best-menu3 {
-    width: 240px;
+    width: 312px;
     height: 190px;
     border: 0 solid white;
     border-radius: 24px;
@@ -67,7 +67,7 @@
 }
 
 .best-menu4 {
-    width: 250px;
+    width: 312px;
     height: 190px;
     border: 0 solid white;
     border-radius: 24px;
