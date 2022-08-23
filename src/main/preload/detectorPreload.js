@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { parseBoolean } from "./parseValue.js";
+import { parseBoolean } from "../function/parseValue.js";
 import { SupportedModels, createDetector } from "@tensorflow-models/face-detection";
 import * as tf from "@tensorflow/tfjs-node";
 import * as path from "path";
@@ -24,7 +24,7 @@ const CAMSIZE = { width: 480, height: 360 }; //
 const MODELSIZE = { width: 200, height: 200 }; //
 const MODEL_PATH = isDev
 	? path.resolve(__dirname, "../../resources/models/model.json")
-	: path.resolve(__dirname, "./resources/models/model.json");
+	: path.resolve(process.env.APP_PATH, "./resources/models/model.json");
 
 contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
