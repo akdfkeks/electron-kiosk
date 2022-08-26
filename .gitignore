@@ -10,4 +10,4 @@ dist
 
 # etc
 *.txt
-.DS_Store
+*.DS_Store
