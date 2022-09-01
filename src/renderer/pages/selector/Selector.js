@@ -11,8 +11,14 @@ const Selector = () => {
         <Link to="/splash">
           <img className="store" src={store} alt="store" />
         </Link>
-        <Link to="/order">
-          <img className="take-out" src={takeout} alt="take-out" />
+        <Link to="/orderold">
+          <img className="take-out1" src={takeout} alt="take-out1" />
+        </Link>
+        <Link to="/orderyoung">
+          <img className="take-out2" src={takeout} alt="take-out2" />
+        </Link>
+        <Link to="/orderchild">
+          <img className="take-out3" src={takeout} alt="take-out3" />
         </Link>
       </div>
     </>

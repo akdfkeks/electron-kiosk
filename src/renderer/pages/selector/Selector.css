@@ -20,7 +20,19 @@
 }
 
 /* 포장 버튼*/
-.take-out {
+.take-out1 {
+    color: black;
+    background-color: white;
+    position: absolute;
+    width: 330px;
+    height: 470px;
+    left: 430px;
+    top: 162px;
+    box-shadow: 57px 109px 49px rgba(51, 40, 0, 0.01), 32px 61px 41px rgba(51, 40, 0, 0.05), 14px 27px 31px rgba(51, 40, 0, 0.09), 4px 7px 17px rgba(51, 40, 0, 0.1), 0px 0px 0px rgba(51, 40, 0, 0.1);
+    border-radius: 30px;
+}
+
+.take-out2 {
     color: black;
     background-color: white;
     position: absolute;
@@ -28,6 +40,18 @@
     height: 470px;
     left: 430px;
     top: 362px;
+    box-shadow: 57px 109px 49px rgba(51, 40, 0, 0.01), 32px 61px 41px rgba(51, 40, 0, 0.05), 14px 27px 31px rgba(51, 40, 0, 0.09), 4px 7px 17px rgba(51, 40, 0, 0.1), 0px 0px 0px rgba(51, 40, 0, 0.1);
+    border-radius: 30px;
+}
+
+.take-out3 {
+    color: black;
+    background-color: white;
+    position: absolute;
+    width: 330px;
+    height: 470px;
+    left: 430px;
+    top: 562px;
     box-shadow: 57px 109px 49px rgba(51, 40, 0, 0.01), 32px 61px 41px rgba(51, 40, 0, 0.05), 14px 27px 31px rgba(51, 40, 0, 0.09), 4px 7px 17px rgba(51, 40, 0, 0.1), 0px 0px 0px rgba(51, 40, 0, 0.1);
     border-radius: 30px;
 }

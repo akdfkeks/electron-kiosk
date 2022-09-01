@@ -11,6 +11,7 @@
     height: 15px;
     background-color: white;
     margin: 0px;
+    border: none;
 }
 
 /* 최상단 추천메뉴라고 써있는 부분 */
@@ -29,7 +30,7 @@
 /* 추천메뉴 박스 */
 .best-menu-box {
     height: 222px;
-    width: 100%;
+    width: 834px;
     border-radius: 0px;
     overflow-x: scroll;
 }
