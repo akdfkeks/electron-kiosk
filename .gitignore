@@ -11,3 +11,5 @@ dist
 # etc
 *.txt
 *.DS_Store
+yarn.lock
+package-lock.json
