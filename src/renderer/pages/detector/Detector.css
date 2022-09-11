@@ -1,0 +1,35 @@
+.WorkerContainer {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/* width: 100vw;
+	height: 100vh; */
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	background-color: gray;
+	-webkit-app-region: drag;
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+video {
+	position: absolute;
+}
+
+/* .ButtonContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+
+.VideoContainer {
+	width: 480px;
+	height: 360px;
+	display: block;
+	position: relative;
+}

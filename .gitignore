@@ -1,0 +1,16 @@
+# node_modules
+node_modules
+
+# environments
+*.env
+
+# build, dist
+build
+dist
+detectorPreload.js
+
+# etc
+*.txt
+*.DS_Store
+yarn.lock
+package-lock.json
