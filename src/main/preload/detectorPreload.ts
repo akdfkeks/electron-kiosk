@@ -152,5 +152,6 @@ function setIpcChannel(analyzer: Analyzer) {
 	ipcRenderer.on("faceInfo", (event, flag: string) => {
 		analyzer.faceAnalyzer(flag);
 	});
+	ipcRenderer.send("detector-loaded");
 	console.log("Analysis ready");
 }

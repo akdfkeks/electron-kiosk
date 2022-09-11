@@ -7,7 +7,7 @@ const appPath = app.getAppPath();
 
 export async function createMainWindow() {
 	const window = new BrowserWindow({
-		show: true,
+		show: false,
 		width: 834,
 		height: 1194,
 		useContentSize: true,
@@ -29,7 +29,7 @@ export async function createDetectorWindow() {
 	const window = new BrowserWindow({
 		titleBarStyle: "hidden",
 		// 얘를 ⬇ false 로 바꾸면 창 안보일거임
-		show: true,
+		show: false,
 		width: 480,
 		height: 360,
 		// useContentSize: true,
@@ -44,6 +44,19 @@ export async function createDetectorWindow() {
 	});
 
 	return loadPage(window, "detector");
+}
+
+export async function createLoadingWindow() {
+	const window = new BrowserWindow({
+		frame: false,
+		show: true,
+		width: 480,
+		height: 360,
+		center: true,
+		resizable: false,
+	});
+	window.loadFile("./loading.html");
+	return window;
 }
 
 function loadPage(window, entry) {
