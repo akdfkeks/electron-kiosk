@@ -3,9 +3,6 @@ import MenuContainer from "./MenuContainer.js";
 import "../Young/BestMenu.css";
 
 export default function MenuRecommender() {
-	{
-		key: "value";
-	}
 	const arr = [
 		{ id: 1, name: "Menu 1", price: 1000, cal: 1000 },
 		{ id: 2, name: "Menu 2", price: 2000, cal: 2000 },
