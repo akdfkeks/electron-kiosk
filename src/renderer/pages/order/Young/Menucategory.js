@@ -10,7 +10,7 @@ function Menucategory() {
   const menutab = [
     {
       id: 1,
-      menuname: "세트메뉴",
+      menuname: "세트메뉴ㄴ",
     },
     {
       id: 2,
