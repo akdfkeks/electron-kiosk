@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import Setmenu from "./Setmenu";
 import Sandwich from "./Sandwich";
 import Snack from "./Snack";
@@ -9,7 +10,7 @@ function Menucategory() {
   const menutab = [
     {
       id: 1,
-      menuname: "세트메뉴",
+      menuname: "세트메뉴ㄴ",
     },
     {
       id: 2,

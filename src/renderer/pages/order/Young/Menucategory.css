@@ -1,0 +1,138 @@
+.btn-setMenu {
+    width: 208px;
+    height: 50px;
+    background-color: #F8C100;
+    color: white;
+    border: 1px solid #F8C100;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0px;
+    font-family: Inter;
+    font-style: semi-bold;
+    font-size: 24px;
+}
+.btn-setMenu:active {   
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    border: 0 solid #F8C100;
+}
+.btn-setMenu:focus {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 5px 1 0 1;
+    border: 0 solid #F8C100;
+}
+.btn-setMenu:focus-within {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 5px 1 0 1;
+    border: 0 solid #F8C100;
+}
+
+
+
+.btn-sandwich {
+    width: 208px;
+    height: 50px;
+    background-color: #F8C100;
+    color: white;
+    border: 1px solid #F8C100;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0px;
+    font-family: Inter;
+    font-style: semi bold;
+    font-size: 24px;
+}
+.btn-sandwich:active {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    border: 0 solid #F8C100;
+}
+.btn-sandwich:focus {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 5px 1 0 1;
+    border: 0 solid #F8C100;
+}
+
+
+
+.btn-snack {
+    width: 208px;
+    height: 50px;
+    background-color: #F8C100;
+    color: white;
+    border: 1px solid #F8C100;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0px;
+    font-family: Inter;
+    font-style: semi bold;
+    font-size: 24px;
+}
+.btn-snack:active {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    border: 0 solid #F8C100;
+}
+.btn-snack:focus {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 5px 1 0 1;
+    border: 0 solid #F8C100;
+}
+
+
+
+.btn-drinks {
+    width: 208px;
+    height: 50px;
+    background-color: #F8C100;
+    color: white;
+    border: 1px solid #F8C100;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0px;
+    font-family: Inter;
+    font-style: semi bold;
+    font-size: 24px;
+}
+.btn-drinks:active {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    border: 0 solid #F8C100;
+}
+.btn-drinks:focus {
+    background-color: white;
+    color: black;
+    height: 50px;
+    margin: 5px 1 0 1;
+    border: 0 solid #F8C100;
+}
+
+
+
+.menuBoard {
+    width: 834px;
+    height: 902px;
+    background-color: white;
+    margin: 0px;
+    position:absolute;
+}
