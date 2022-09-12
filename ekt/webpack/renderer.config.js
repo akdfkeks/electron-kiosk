@@ -66,6 +66,11 @@ const rendererConfig = {
 			filename: "index.html",
 			chunks: ["renderer"],
 		}),
+		new HTMLWebpackPlugin({
+			template: resolve(DIR.LOADING_HTML),
+			filename: "loading.html",
+			chunks: [],
+		}),
 		new CopyWebpackPlugin({
 			patterns: [
 				{

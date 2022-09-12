@@ -7,6 +7,7 @@ import "@tensorflow/tfjs-backend-webgl";
 //import { L1L2Args } from "@tensorflow/tfjs-layers/dist/regularizers.js";
 import { WebcamIterator } from "@tensorflow/tfjs-data/dist/iterators/webcam_iterator.js";
 import { LayerArgs } from "@tensorflow/tfjs-layers/dist/engine/topology.js";
+import { Tensor } from "@tensorflow/tfjs-node";
 
 class L2 extends tf.layers.Layer {
 	static className = "L2";
@@ -134,25 +135,23 @@ class Analyzer {
 		}
 	}
 
-	async faceAnalyzer(flag: boolean) {
-		const ctlFlag = parseBoolean(flag);
-		if (!ctlFlag) throw new Error("Error from faceAnalyzer");
+	async faceAnalyzer(flag: string) {
+		this.detectionFlag = parseBoolean(flag);
 
 		if (this.detectionFlag) {
 			const img = await this.tfcam.capture();
 			const resizedData = tf.expandDims(img, 0);
-			const probs = this.analysisModel.predictOnBatch(resizedData);
-			console.log(probs);
-			// const sorted = true;
-			// const { values, indices } = tf.topk(probs, topK, sorted);
-			//console.log(values, indices);
-		} else this.faceAnalyzer(true);
+			const probs = this.analysisModel.predictOnBatch(resizedData) as Tensor<tf.Rank>;
+			const { values, indices } = tf.topk(probs);
+			console.log(values, indices);
+		} else console.log("Failed");
 	}
 }
 
 function setIpcChannel(analyzer: Analyzer) {
-	ipcRenderer.on("faceInfo", (event, flag) => {
+	ipcRenderer.on("faceInfo", (event, flag: string) => {
 		analyzer.faceAnalyzer(flag);
 	});
+	ipcRenderer.send("detector-loaded");
 	console.log("Analysis ready");
 }

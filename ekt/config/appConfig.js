@@ -33,6 +33,7 @@ exports.APP_CONFIG = {
 		},
 
 		INDEX_HTML: resolve(__dirname, "../../src/renderer/index.html"),
+		LOADING_HTML: resolve(__dirname, "../../src/main/function/loading.html"),
 		RESOURCES: resolve(__dirname, "../../src/resources/"),
 		ASSETS: resolve(__dirname, "../../src/resources/assets/"),
 		BUILD: resolve(__dirname, "../../build"),
