@@ -10,6 +10,7 @@ let loadingWindow, mainWindow, detectorWindow;
 
 app.whenReady().then(async () => {
 	loadingWindow = await createLoadingWindow();
+	await loadingWindowEventHandler();
 
 	const camIsAvailable = await getCameraAccess();
 	if (!camIsAvailable) {
@@ -26,13 +27,19 @@ function detectorController(flag) {
 	detectorWindow.webContents.send("faceInfo", flag);
 }
 
+async function loadingWindowEventHandler() {
+	ipcMain.on("loader", (...msg) => {
+		loadingWindow.webContents.send("loader", msg[1]);
+	});
+}
+
 async function mainWindowEventHandler() {
 	mainWindow = await createMainWindow();
 	detectorWindow = await createDetectorWindow();
 
 	ipcMain.on("detector-loaded", () => {
 		if (loadingWindow) {
-			loadingWindow.close();
+			//loadingWindow.close();
 		}
 		mainWindow.show();
 		detectorWindow.show();

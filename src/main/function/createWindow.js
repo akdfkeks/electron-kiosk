@@ -54,6 +54,12 @@ export async function createLoadingWindow() {
 		height: 360,
 		center: true,
 		resizable: false,
+		webPreferences: {
+			sandbox: false,
+			devTools: true,
+			contextIsolation: true,
+			preload: path.resolve(appPath, "./preload/loaderPreload.js"),
+		},
 	});
 	window.loadFile("./loading.html");
 	return window;
