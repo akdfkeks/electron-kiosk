@@ -23,6 +23,7 @@ exports.APP_CONFIG = {
 			RENDERER: resolve(__dirname, "../../src/renderer/index.jsx"),
 			MAIN_PRELOAD: resolve(__dirname, "../../src/main/preload/mainPreload.js"),
 			DETECTOR_PRELOAD: resolve(__dirname, "../../src/main/preload/detectorPreload.js"),
+			LOADER_PRELOAD: resolve(__dirname, "../../src/main/preload/loaderPreload.js"),
 		},
 		OUTPUT: {
 			MAIN: resolve(__dirname, "../../build"),
@@ -33,7 +34,7 @@ exports.APP_CONFIG = {
 		},
 
 		INDEX_HTML: resolve(__dirname, "../../src/renderer/index.html"),
-		LOADING_HTML: resolve(__dirname, "../../src/main/function/loading.html"),
+		LOADING_HTML: resolve(__dirname, "../../src/renderer/others/loader.html"),
 		RESOURCES: resolve(__dirname, "../../src/resources/"),
 		ASSETS: resolve(__dirname, "../../src/resources/assets/"),
 		BUILD: resolve(__dirname, "../../build"),

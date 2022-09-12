@@ -36,17 +36,24 @@ contextBridge.exposeInMainWorld("preload", {
 	init: async () => {
 		tfjsInitializer();
 
+		ipcRenderer.send("loader", "Creating Analyzer...");
+
 		analyzer = new Analyzer();
-		console.log("Analyzer created");
 
-		await analyzer.initDetector();
-		console.log("Detector Model loaded");
+		ipcRenderer.send("loader", "Loading detector...");
 
-		await analyzer.initVideofromUserMedia();
-		console.log("Camera loaded");
+		await analyzer.initDetector().then(() => {
+			console.log("Detector Model loaded");
+			ipcRenderer.send("loader", "Initializing Camera...");
+		});
 
-		setIpcChannel(analyzer);
-		console.log("Ipc ready");
+		await analyzer.initVideofromUserMedia().then(() => {
+			console.log("Camera loaded");
+			ipcRenderer.send("detector-loaded");
+		});
+
+		setAnalyzerIpcChannel(analyzer);
+		console.log("Detector Ipc ready");
 
 		setInterval(() => {
 			analyzer.faceTracker();
@@ -148,10 +155,11 @@ class Analyzer {
 	}
 }
 
-function setIpcChannel(analyzer: Analyzer) {
+function setAnalyzerIpcChannel(analyzer: Analyzer) {
 	ipcRenderer.on("faceInfo", (event, flag: string) => {
 		analyzer.faceAnalyzer(flag);
 	});
-	ipcRenderer.send("detector-loaded");
 	console.log("Analysis ready");
 }
+
+function appIpcChannel() {}

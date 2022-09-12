@@ -7,7 +7,6 @@ const { APP_CONFIG } = require("../config/appConfig.js");
 const { DIR } = APP_CONFIG;
 const { resolve } = require("path");
 const webpack = require("webpack");
-const path = require("path/win32");
 const isDev = process.env.NODE_ENV !== "production";
 
 const rendererConfig = {

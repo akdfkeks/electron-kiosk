@@ -11,6 +11,7 @@ const mainConfig = {
 		index: resolve(DIR.ENTRY.MAIN),
 		"preload/mainPreload": resolve(DIR.ENTRY.MAIN_PRELOAD),
 		"preload/detectorPreload": resolve(DIR.ENTRY.DETECTOR_PRELOAD),
+		"preload/loaderPreload": resolve(DIR.ENTRY.LOADER_PRELOAD),
 	},
 	output: {
 		filename: "[name].js",
